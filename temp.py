@@ -1,20 +1,27 @@
 import cv2 as cv
-import time
-fileName = "images/dog.jpg"
-src = cv.imread(fileName)
-winTitle = "dogPic"
-cv.namedWindow(winTitle, cv.WINDOW_AUTOSIZE)
-cv.imshow(winTitle, src)
-cv.waitKey(0)
-row, col, chn = src.shape
-start = time.perf_counter_ns()
-for i in range(row):
-    for j in range(col):
-        b, g, r = src[i, j]
-        b = 255 - b
-        g = 255 - g
-        r = 255 - r
-        src[i, j] = [b, g, r]
-print(time.perf_counter_ns() - start)
-cv.imshow(winTitle, src)
+import numpy as np
+
+pathRoot = "F:/Code/openCV/opencv/sources/samples/data/"
+img0 = pathRoot + "WindowsLogo.jpg"
+img1 = pathRoot + "LinuxLogo.jpg"
+src0 = cv.imread(img0)
+src1 = cv.imread(img1)
+cv.imshow("img0", src0)
+cv.imshow("img1", src1)
+
+result = np.zeros(src1.shape, src1.dtype)
+# result[100:200,50:250,:]=127
+# cv.imshow("result",result)
+cv.add(src0, src1, result)
+cv.imshow("add", result)
+
+cv.subtract(src0, src1, result)
+cv.imshow("subtract", result)
+
+cv.multiply(src0, src1, result)
+cv.imshow("multiply", result)
+
+cv.divide(src0, src1, result)
+cv.imshow("divide", result)
+
 cv.waitKey(0)
