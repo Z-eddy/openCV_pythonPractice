@@ -1,27 +1,13 @@
 import cv2 as cv
-import numpy as np
 
-pathRoot = "F:/Code/openCV/opencv/sources/samples/data/"
-img0 = pathRoot + "WindowsLogo.jpg"
-img1 = pathRoot + "LinuxLogo.jpg"
-src0 = cv.imread(img0)
-src1 = cv.imread(img1)
-cv.imshow("img0", src0)
-cv.imshow("img1", src1)
-
-result = np.zeros(src1.shape, src1.dtype)
-# result[100:200,50:250,:]=127
-# cv.imshow("result",result)
-cv.add(src0, src1, result)
-cv.imshow("add", result)
-
-cv.subtract(src0, src1, result)
-cv.imshow("subtract", result)
-
-cv.multiply(src0, src1, result)
-cv.imshow("multiply", result)
-
-cv.divide(src0, src1, result)
-cv.imshow("divide", result)
-
+filePath = "G:/Practice/openCV/images/LUT_test.PNG"
+src = cv.imread(filePath)
+winTitle = "picTest"
+cv.namedWindow(winTitle)
+# 原图展示
+cv.imshow(winTitle, src)
+cv.waitKey(0)
+# LUT转换
+src = cv.applyColorMap(src, cv.COLORMAP_JET)
+cv.imshow(winTitle, src)
 cv.waitKey(0)
