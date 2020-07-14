@@ -1,16 +1,18 @@
 import cv2 as cv
 import numpy as np
+src = cv.imread("G:/Practice/openCV/images/TinyGreen.PNG")
+res = cv.cvtColor(src, cv.COLOR_BGR2YUV)
+cv.imshow("YUV", res)  # YUV
+res = cv.cvtColor(src, cv.COLOR_BGR2YCrCb)
+cv.imshow("YCrCb", res)  # YCrCb
+res = cv.cvtColor(src, cv.COLOR_BGR2HSV)
+cv.imshow("HSV", res)  # HSV
 
-src = cv.imread("images/dog.jpg")
-winTitle = "dogPic"
-cv.namedWindow(winTitle, cv.WINDOW_AUTOSIZE)
-cv.imshow(winTitle, src)  # 原图显示
+res = cv.inRange(res, (35, 43, 46), (77, 255, 255))  # 二值化
+cv.imshow("inRange", res)
+
+res = cv.cvtColor(res, cv.COLOR_GRAY2BGR)  # 灰度图转换3通道
+res = cv.add(src, res)  # 抠图
+cv.imshow("final", res)
+
 cv.waitKey(0)
-
-# 分别打印BGR通道置零时的图片
-for i in range(3):
-    mv = cv.split(src)
-    mv[i][:, :] = 0
-    rst = cv.merge(mv)
-    cv.imshow(winTitle, rst)
-    cv.waitKey(0)
