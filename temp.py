@@ -19,7 +19,12 @@ cv.waitKey(0)
 minV, maxV, minLoc, maxLoc = cv.minMaxLoc(src1)
 mean = src1.mean()
 print(minV, maxV, minLoc, maxLoc)
-src1[np.where(src1 >= mean)] = 255
-src1[np.where(src1 < mean)] = 0
+# where没有x,y值时返回满足的坐标
+tempBig = np.where(src1 >= mean)
+tempLittle=np.where(src1<mean)
+# 取得坐标后再更改
+src1[tempLittle] = 255
+src1[tempBig] = 0
+# src1=cv.bitwise_not(src1)
 cv.imshow(winTitle, src1)
 cv.waitKey(0)
