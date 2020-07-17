@@ -1,38 +1,21 @@
 import cv2.cv2 as cv
 import numpy as np
 
-src = cv.imread("./images/dog.jpg")
-cv.imshow("original", src)
+video = cv.VideoCapture(
+    r"D:\codeSofts\opencv\opencv\sources\samples\data\vtest.avi")
+width = video.get(cv.CAP_PROP_FRAME_WIDTH)
+height = video.get(cv.CAP_PROP_FRAME_HEIGHT)
+fps = video.get(cv.CAP_PROP_FPS)
 
-# 转为灰度图(1通道)
-src = cv.cvtColor(src, cv.COLOR_BGR2GRAY)
-src = np.float32(src)
+# writer=cv.VideoWriter("videoDemo.mp4",cv.CAP_PROP_FOCUS,fps,(np.int(width),np.int(height)),True)
+writer = cv.VideoWriter("./videoDemo.mp4", cv.CAP_PROP_FOCUS,
+                        fps, (np.int(width), np.int(height)), True)
+while True:
+    ok, frame = video.read()
+    if ok:
+        writer.write(frame)
+    else:
+        break
 
-
-# MINMAX归一化
-dst = np.zeros(src.shape, np.float32)
-cv.normalize(src, dst, 1, 0, cv.NORM_MINMAX)
-dst *= 255
-dst = np.uint8(dst)
-cv.imshow("MINMAX", dst)
-
-# INF归一化
-dst = np.zeros(src.shape, np.float32)  # Python每次需要手动去初始化!
-cv.normalize(src, dst, 1, 0, cv.NORM_INF)
-dst *= 255
-dst = np.uint8(dst)
-cv.imshow("INF", dst)
-
-# L1归一化
-dst = np.zeros(src.shape, np.float32)
-cv.normalize(src, dst, 1, 0, cv.NORM_L1)
-dst = np.uint8(dst*10000000)
-cv.imshow("L1", dst)
-
-# L2归一化
-dst = np.zeros(src.shape, np.float32)
-cv.normalize(src, dst, 1, 0, cv.NORM_L2)
-dst = np.uint8(dst*10000)
-cv.imshow("L2", dst)
-
-cv.waitKey(0)
+video.release()
+writer.release()
