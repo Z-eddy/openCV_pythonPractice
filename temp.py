@@ -2,29 +2,37 @@ import cv2.cv2 as cv
 import numpy as np
 
 src = cv.imread("./images/dog.jpg")
-winTitle = "dogImg"
-cv.namedWindow(winTitle, cv.WINDOW_AUTOSIZE)
-cv.imshow(winTitle, src)
-cv.waitKey(0)
+cv.imshow("original", src)
 
-# 求取平均值、方差
-means, stdDev = cv.meanStdDev(src)
-for i in range(len(means)):
-    print("平均值:%.2f,方差:%.2f" % (means[i], stdDev[i]))
+# 转为灰度图(1通道)
+src = cv.cvtColor(src, cv.COLOR_BGR2GRAY)
+src = np.float32(src)
 
-# 输出黑白色
-src1 = cv.split(src)[0]  # 蓝色通道的值
-cv.imshow(winTitle, src1)
-cv.waitKey(0)
-minV, maxV, minLoc, maxLoc = cv.minMaxLoc(src1)
-mean = src1.mean()
-print(minV, maxV, minLoc, maxLoc)
-# where没有x,y值时返回满足的坐标
-tempBig = np.where(src1 >= mean)
-tempLittle=np.where(src1<mean)
-# 取得坐标后再更改
-src1[tempLittle] = 255
-src1[tempBig] = 0
-# src1=cv.bitwise_not(src1)
-cv.imshow(winTitle, src1)
+
+# MINMAX归一化
+dst = np.zeros(src.shape, np.float32)
+cv.normalize(src, dst, 1, 0, cv.NORM_MINMAX)
+dst *= 255
+dst = np.uint8(dst)
+cv.imshow("MINMAX", dst)
+
+# INF归一化
+dst = np.zeros(src.shape, np.float32)  # Python每次需要手动去初始化!
+cv.normalize(src, dst, 1, 0, cv.NORM_INF)
+dst *= 255
+dst = np.uint8(dst)
+cv.imshow("INF", dst)
+
+# L1归一化
+dst = np.zeros(src.shape, np.float32)
+cv.normalize(src, dst, 1, 0, cv.NORM_L1)
+dst = np.uint8(dst*10000000)
+cv.imshow("L1", dst)
+
+# L2归一化
+dst = np.zeros(src.shape, np.float32)
+cv.normalize(src, dst, 1, 0, cv.NORM_L2)
+dst = np.uint8(dst*10000)
+cv.imshow("L2", dst)
+
 cv.waitKey(0)
