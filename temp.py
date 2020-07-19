@@ -1,8 +1,12 @@
 import cv2.cv2 as cv
 import numpy as np
 
-dst=np.zeros((400,400,3),np.uint8)
-cv.line(dst,(100,100),(200,200),(255,0,0),1)
-cv.rectangle(dst,(200,200),(300,300),(0,0,255),-1)
-cv.imshow("test",dst)
+src = cv.imread("G:/Practice/openCV/images/TinyGreen.PNG")
+hsv = cv.cvtColor(src, cv.COLOR_BGR2HSV)  # hsv
+mask = cv.inRange(hsv, (36, 43, 46), (99, 255, 255))  # 掩膜
+blueBg = np.zeros(src.shape, src.dtype)
+blueBg[:, :, 0] = 255
+dst = cv.bitwise_and(blueBg, blueBg, src, mask)
+cv.imshow("dst", dst)
+
 cv.waitKey(0)
