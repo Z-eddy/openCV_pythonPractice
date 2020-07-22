@@ -4,7 +4,9 @@ import numpy as np
 src=cv.imread("images/dog.jpg")
 cv.imshow("original",src)
 
-src=cv.blur(src,(3,3))
-cv.imshow("卷积后",src)
+src=cv.blur(src,(5,5))
+cv.imshow("blur",src)
+src=cv.GaussianBlur(src,(5,5),0,15)
+cv.imshow("gaussianBlur",src)
 
 cv.waitKey(0)
