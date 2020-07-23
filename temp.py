@@ -4,9 +4,7 @@ import numpy as np
 src=cv.imread("images/dog.jpg")
 cv.imshow("original",src)
 
-src=cv.blur(src,(5,5))
-cv.imshow("blur",src)
-src=cv.GaussianBlur(src,(5,5),0,15)
-cv.imshow("gaussianBlur",src)
+src=cv.medianBlur(src,3)
+cv.imshow("mediaBlur",src)
 
 cv.waitKey(0)
