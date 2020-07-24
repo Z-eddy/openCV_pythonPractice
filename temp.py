@@ -2,6 +2,7 @@
 import numpy as np
 
 src=cv.imread("images/dog.jpg")
+src=cv.UMat(src)
 cv.imshow("original",src)
 
 src=cv.fastNlMeansDenoisingColored(src,None)
