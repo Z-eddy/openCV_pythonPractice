@@ -1,7 +1,9 @@
 ﻿import cv2.cv2 as cv
 import numpy as np
-src=cv.imread("images/dog.jpg")
+
+src=cv.imread("E:/openCV/opencv_tutorial/data/images/example.png")
 src=cv.UMat(src)
-dst=cv.pyrMeanShiftFiltering(src,15,30)
-cv.imshow("result", dst)
+cv.imshow("original",src)
+dst=cv.edgePreservingFilter(src,None,1,100,0.4)
+cv.imshow("edgePreservingFilter",dst)
 cv.waitKey(0)
