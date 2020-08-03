@@ -1,7 +1,9 @@
 ﻿import cv2.cv2 as cv
 import numpy as np
 src=cv.imread("images/dog.jpg")
-dst=cv.Canny(src,100,300)
-cv.imshow("Canny", dst)
+pyrDownDst=cv.pyrDown(src)
+cv.imshow("pyrDown",pyrDownDst)
+pyrUpDst=cv.pyrUp(pyrDownDst)
+cv.imshow("pyrUp",pyrUpDst)
 
 cv.waitKey(0)
