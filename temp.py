@@ -1,17 +1,8 @@
 ﻿import cv2.cv2 as cv
 import numpy as np
-src=cv.imread("images/dog.jpg")
-src=cv.cvtColor(src,cv.COLOR_BGR2GRAY)
-t=127
-row,col=src.shape[:2]
-for i in range(row):
-    for j in range(col):
-        val= src[i, j]
-        if(val>t):
-            src[i, j]=255
-        else :
-            src[i, j]=0
 
-cv.imshow("dst",src)
+src= cv.imread("C:/Users/Zr/Desktop/temp/test.png")
+returnVal,dst=cv.threshold(src,127,255,cv.THRESH_BINARY) # python会有2个返回值,第一个是阈值大小
+cv.imshow("BINARY",dst)
 
 cv.waitKey(0)
